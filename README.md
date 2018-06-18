@@ -18,5 +18,5 @@ To fix:
 
 Fixed:
 
-  * ~~3rd click bugs out the game cards preventing you from clicking that card unless another is clicked first.
+  * ~~3rd click bugs out the game cards preventing you from clicking that card unless another is clicked first.~~
  
