@@ -7,5 +7,5 @@ I have expanded on this by adding an array with the original 151 Pokemon which t
 Todo:
 
   * Add difficulties (Easy, Medium, Hard)
-  * keep scores based on time and number of guesses.
+  * Keep scores based on time and number of guesses.
   * Hook it up to a scoreboard with a database using firebase.
