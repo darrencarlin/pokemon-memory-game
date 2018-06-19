@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,27 @@
     <link rel="stylesheet" href="styles/styles.css">
     <title>Memory Game</title>
 </head>
-<body>
 
-    <div id="game"></div>
-    <script src="js/script.js"> </script>
+<body>
+    <div class="wrapper">
+        <div id="options" class="options">
+            <div id="timer" class="timer">0:00</div>
+            <div id="guesses" class="guesses"></div>
+            <div id="difficulty" class="difficulty">
+                <span id="easy" class="btn easy">Easy</span>
+                <span id="medium" class="btn medium">Medium</span>
+                <span id="hard" class="btn hard">Hard</span>
+                <span id="master" class="btn master">Master</span>
+            </div>
+        </div>
+
+        <div id="game">
+            <section id="grid" class="grid">
+            </section>
+        </div>
+    </div>
+    <script src="js/pokemon.js"></script>
+    <script src="js/script.js"></script>
 </body>
+
 </html>

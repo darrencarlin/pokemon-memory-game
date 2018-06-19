@@ -2,6 +2,8 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
@@ -18,17 +20,58 @@ h3 {
 
 /* Module */
 
-.grid {
-    max-width: 960px;
+.wrapper {
     margin: 0 auto;
+    max-width: 960px;
+}
+
+/* Top Bar */
+
+.options {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    color: #fff;
+    font-size: 1.5em;
+}
+
+.timer,
+.guesses {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin: 5px;
+    padding: 15px;
+    border: 1px solid #FFF;
+    width: 100px;
+}
+
+.difficulty {
+    display: flex;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+    padding: 20px;
+    border: 1px solid #FFF;
+    width: 100px;
+    cursor: pointer;
+}
+
+.grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
+    margin: 25px 0;
 }
 
 .card {
     position: relative;
-    transition: all .4s linear;
+    transition: all .3s linear;
     transform-style: preserve-3d;
     margin: 5px;
 }
@@ -44,6 +87,16 @@ h3 {
 .front {
     position: absolute;
     backface-visibility: hidden;
+}
+
+.hard-difficulty {
+    height: 100px !important;
+    width: 100px !important;
+}
+
+.master-difficulty {
+    height: 80px !important;
+    width: 80px !important;
 }
 
 .front {
@@ -70,4 +123,5 @@ h3 {
 
 .match {
     background-image: none !important;
+    pointer-events: none;
 }
