@@ -26,8 +26,24 @@
             <section id="grid" class="grid">
             </section>
         </div>
+        <div id="scoreboard">
+
+        </div>
     </div>
     <script src="js/pokemon.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyDDQe31Lzf6op1dkMF_jlQmgELRHLu7esI",
+            authDomain: "memory-game-99133.firebaseapp.com",
+            databaseURL: "https://memory-game-99133.firebaseio.com",
+            projectId: "memory-game-99133",
+            storageBucket: "",
+            messagingSenderId: "1054895662542"
+        };
+        firebase.initializeApp(config);
+    </script>
     <script src="js/script.js"></script>
 </body>
 

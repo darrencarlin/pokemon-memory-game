@@ -10,17 +10,23 @@ let previousTarget = null;
 let gameOver = false;
 let grid = document.getElementById('grid');
 let difficulty = document.getElementById('difficulty');
+let chosenDifficulty;
 let easy = false;
 let medium = true;
 let hard = false;
 let master = false;
+let easyNum = 6;
+let mediumNum = 12;
+let hardNum = 24;
+let masterNum = 48;
 document.getElementById('guesses').innerHTML = guesses;
 document.getElementById('medium').style.backgroundColor = '#ffcb05';
 
 difficulty.addEventListener('click', () => {
     let clicked = event.target.id;
     if (clicked == 'easy') {
-        populateCardsArray(6)
+        populateCardsArray(easyNum)
+        chosenDifficulty = 'Easy';
         easy = true;
         medium = false;
         hard = false;
@@ -31,7 +37,8 @@ difficulty.addEventListener('click', () => {
         document.getElementById('master').style.backgroundColor = 'initial';
     }
     if (clicked == 'medium') {
-        populateCardsArray(12)
+        populateCardsArray(mediumNum)
+        chosenDifficulty = 'Medium';
         easy = false;
         medium = true;
         hard = false;
@@ -44,7 +51,8 @@ difficulty.addEventListener('click', () => {
     }
 
     if (clicked == 'hard') {
-        populateCardsArray(24)
+        populateCardsArray(hardNum)
+        chosenDifficulty = 'Hard';
         easy = false;
         medium = false;
         hard = true;
@@ -59,7 +67,8 @@ difficulty.addEventListener('click', () => {
         });
     }
     if (clicked == 'master') {
-        populateCardsArray(48, true)
+        populateCardsArray(masterNum, true)
+        chosenDifficulty = 'Master';
         easy = false;
         medium = false;
         hard = false;
@@ -76,7 +85,7 @@ difficulty.addEventListener('click', () => {
     }
 })
 
-function populateCardsArray(diff = 12, master = false) {
+function populateCardsArray(diff = mediumNum, master = false) {
     let prev;
     cardsArray = [];
     for (let i = 0; i < diff; i++) {
@@ -160,7 +169,7 @@ const match = () => {
         card.classList.add('match');
     });
     matches += 2;
-    if (matches === 12 && easy || matches === 24 && medium || matches === 48 && hard || matches === 96 && master) {
+    if (matches === (easyNum * 2) && easy || matches === (mediumNum * 2) && medium || matches === (hardNum * 2) && hard || matches === (masterNum * 2) && master) {
         endGame();
     }
 }
@@ -177,12 +186,24 @@ const resetGuesses = () => {
 };
 
 const endGame = () => {
+
     gameOver = true;
     clearInterval(start);
     counterTime = false;
-    console.log('You Won');
-    console.log(document.getElementById('timer').innerHTML);
-    console.log(guesses);
+    let firebaseKey = firebase.database().ref().child("memory-game-99133").push().key;
+    let player = prompt('Please enter your name');
+    let data = {
+        player: player,
+        id: firebaseKey,
+        time: document.getElementById('timer').innerHTML,
+        guesses: guesses,
+        difficulty: chosenDifficulty
+    }
+    let updates = {};
+    updates['/' + firebaseKey] = data;
+    return firebase.database().ref().update(updates);
+
+
 }
 
 const timer = () => {
