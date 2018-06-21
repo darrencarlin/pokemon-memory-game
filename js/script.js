@@ -10,7 +10,7 @@ let previousTarget = null;
 let gameOver = false;
 let grid = document.getElementById('grid');
 let difficulty = document.getElementById('difficulty');
-let chosenDifficulty;
+var chosenDifficulty = 'Easy';
 let easy = false;
 let medium = true;
 let hard = false;
@@ -23,10 +23,14 @@ document.getElementById('guesses').innerHTML = guesses;
 document.getElementById('medium').style.backgroundColor = '#ffcb05';
 
 difficulty.addEventListener('click', () => {
+
     let clicked = event.target.id;
     if (clicked == 'easy') {
-        populateCardsArray(easyNum)
         chosenDifficulty = 'Easy';
+        displayLeaderboard.mode = 'Easy'
+        console.log(displayLeaderboard.mode);
+        populateCardsArray(easyNum);
+        displayLeaderboard.orderByName();
         easy = true;
         medium = false;
         hard = false;
@@ -35,10 +39,12 @@ difficulty.addEventListener('click', () => {
         document.getElementById('medium').style.backgroundColor = 'initial';
         document.getElementById('hard').style.backgroundColor = 'initial';
         document.getElementById('master').style.backgroundColor = 'initial';
+
     }
     if (clicked == 'medium') {
-        populateCardsArray(mediumNum)
         chosenDifficulty = 'Medium';
+        console.log(chosenDifficulty);
+        populateCardsArray(mediumNum);
         easy = false;
         medium = true;
         hard = false;
@@ -47,12 +53,12 @@ difficulty.addEventListener('click', () => {
         document.getElementById('medium').style.backgroundColor = '#ffcb05';
         document.getElementById('hard').style.backgroundColor = 'initial';
         document.getElementById('master').style.backgroundColor = 'initial';
-
+        displayLeaderboard.orderByName();
     }
 
     if (clicked == 'hard') {
-        populateCardsArray(hardNum)
         chosenDifficulty = 'Hard';
+        populateCardsArray(hardNum)
         easy = false;
         medium = false;
         hard = true;
@@ -67,8 +73,8 @@ difficulty.addEventListener('click', () => {
         });
     }
     if (clicked == 'master') {
-        populateCardsArray(masterNum, true)
         chosenDifficulty = 'Master';
+        populateCardsArray(masterNum, true)
         easy = false;
         medium = false;
         hard = false;
@@ -83,6 +89,7 @@ difficulty.addEventListener('click', () => {
             node.classList.add('master-difficulty');
         });
     }
+
 })
 
 function populateCardsArray(diff = mediumNum, master = false) {
@@ -107,6 +114,7 @@ function populateCardsArray(diff = mediumNum, master = false) {
     let gameGrid = cardsArray.concat(cardsArray);
     gameGrid.sort(() => 0.5 - Math.random());
     populateGrid(gameGrid);
+
 }
 
 function populateGrid(gameGrid) {
@@ -190,7 +198,7 @@ const endGame = () => {
     gameOver = true;
     clearInterval(start);
     counterTime = false;
-    let firebaseKey = firebase.database().ref().child("memory-game-99133").push().key;
+    let firebaseKey = firebase.database().ref().child('memory-game-5bdeb').push().key;
     let player = prompt('Please enter your name');
     let data = {
         player: player,
@@ -201,8 +209,7 @@ const endGame = () => {
     }
     let updates = {};
     updates['/' + firebaseKey] = data;
-    return firebase.database().ref().update(updates);
-
+    return firebase.database().ref(`scores/${chosenDifficulty}/`).update(updates);
 
 }
 
@@ -220,4 +227,47 @@ const timer = () => {
     document.getElementById('timer').innerHTML = timerOutput;
 }
 
+let displayLeaderboard = {
+
+
+    data: firebase.database().ref(`/scores/${chosenDifficulty}/`),
+
+    orderByEasy: function () {
+        this.data.orderByChild('Easy').on("value", function (snapshot) {
+            snapshot.forEach(function (data) {
+                console.log(data.val().player + " completed the game in " + data.val().time + " and guessed " + data.val().guesses + " times.");
+            });
+        })
+    },
+
+    orderByName: function () {
+        console.log(`difficulty: ${chosenDifficulty}`)
+        this.data.orderByChild('player').on("value", function (snapshot) {
+            snapshot.forEach(function (data) {
+                console.log(data.val().player + " completed the game in " + data.val().time + " and guessed " + data.val().guesses + " times.");
+            });
+        })
+    },
+
+    orderByTime: function () {
+        this.data.orderByChild('time').on("value", function (snapshot) {
+            snapshot.forEach(function (data) {
+                console.log(data.val().player + " completed the game in " + data.val().time + " and guessed " + data.val().guesses + " times.");
+            });
+        })
+    },
+
+    orderByGuesses: function () {
+        this.data.orderByChild('guesses').on("value", function (snapshot) {
+            snapshot.forEach(function (data) {
+                console.log(data.val().player + " completed the game in " + data.val().time + " and guessed " + data.val().guesses + " times.");
+            });
+        })
+    }
+}
+
+let getScore = (guesses, time) => {
+    console.log((time / guesses) / 100);
+}
+getScore(6, 60000);
 populateCardsArray();
