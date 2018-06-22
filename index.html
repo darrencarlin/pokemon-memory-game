@@ -10,15 +10,25 @@
 </head>
 
 <body>
+ 
     <div class="wrapper">
         <div id="options" class="options">
-            <div id="timer" class="timer">0:00</div>
-            <div id="guesses" class="guesses"></div>
-            <div id="difficulty" class="difficulty">
-                <span id="easy" class="btn easy">Easy</span>
-                <span id="medium" class="btn medium">Medium</span>
-                <span id="hard" class="btn hard">Hard</span>
-                <span id="master" class="btn master">Master</span>
+            <div class="option-wrapper">
+                <p>Time</p>
+                <div id="timer" class="timer">0:00</div>
+            </div>
+            <div class="option-wrapper">
+                <p>Guesses</p>
+                <div id="guesses" class="guesses"></div>
+            </div>
+            <div class="option-wrapper">
+                <p>Difficulty</p>
+                <div id="difficulty" class="difficulty">
+                    <span id="easy" class="btn easy"></span>
+                    <span id="medium" class="btn medium"></span>
+                    <span id="hard" class="btn hard"></span>
+                    <span id="master" class="btn master"></span>
+                </div>
             </div>
         </div>
 
@@ -27,7 +37,9 @@
             </section>
         </div>
         <div id="scoreboard">
+            <table id="table">
 
+            </table>
         </div>
     </div>
     <script src="js/pokemon.js"></script>
