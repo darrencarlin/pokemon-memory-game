@@ -20,7 +20,6 @@ let easyNum = 6;
 let mediumNum = 12;
 let hardNum = 24;
 let masterNum = 48;
-var country;
 document.getElementById('guesses').innerHTML = guesses;
 document.getElementById('medium').classList.add('mode-selected');
 
@@ -100,11 +99,7 @@ grid.addEventListener('click', () => {
         start = setInterval(timer, 1000);
         counterStart = true;
     }
-    
-    if (clicked.className === 'front' || clicked.className === 'front master-difficulty' || clicked.className === 'front hard-difficulty') {
-        guesses++
-        document.getElementById('guesses').innerHTML = guesses;
-    }
+
     if (clicked.nodeName === 'section' || clicked === previousTarget) {
         return;
     }
@@ -120,6 +115,8 @@ grid.addEventListener('click', () => {
             secondGuess = clicked.parentNode.dataset.name;
             clicked.parentNode.classList.add('selected');
             game.style.pointerEvents = "none";
+            guesses++
+            document.getElementById('guesses').innerHTML = guesses;
         }
         if (firstGuess !== '' && secondGuess !== '') {
             if (firstGuess === secondGuess) {
@@ -210,6 +207,7 @@ const endGame = () => {
 };
 
 const enterName = () => {
+   
     let firebaseKey = firebase.database().ref().child('memory-game-5bdeb').push().key;
     let player = prompt('Please enter your name');
     let data = {
@@ -217,8 +215,7 @@ const enterName = () => {
         id: firebaseKey,
         time: document.getElementById('timer').innerHTML,
         guesses: guesses,
-        difficulty: chosenDifficulty,
-        location: country
+        difficulty: chosenDifficulty
     }
     let updates = {};
     updates['/' + firebaseKey] = data;
@@ -242,7 +239,7 @@ const timer = () => {
 let displayLeaderboard = {
     orderByEasy: function () {
         let data = firebase.database().ref('/scores/' + chosenDifficulty);
-        this.data.orderByChild('Easy').on("value", function (snapshot) {
+        data.orderByChild('Easy').on("value", function (snapshot) {
             if (snapshot.val() === null) {
                 displayLeaderboard.display('No one has completed the game on this mode yet')
             } else {
@@ -286,13 +283,13 @@ let displayLeaderboard = {
 
     display: function (data) {
         let table = document.getElementById('table');
+        console.log(data);
         table.innerHTML = ` 
                         <tr>
                             <th>Rank</th>
                             <th>Player</th>
                             <th>Time</th>
                             <th>Guesses</th>
-                            <th>Country</th>
                         </tr>`;
         if (typeof data === 'string') {
             table.innerHTML = `<tr><td>No scores recorded for this mode</td></tr>`;
@@ -302,45 +299,13 @@ let displayLeaderboard = {
                 table.innerHTML += `
                         <tr>
                             <td>${i += 1}</td>
-                            <td>${data.val().player} </td>
-                            <td> ${data.val().time} </td>
-                            <td> ${data.val().guesses} </td>
-                            <td> ${data.val().location} </td>
+                            <td>${data.val().player}</td>
+                            <td>${data.val().time}</td>
+                            <td>${data.val().guesses}</td>
                         </tr>`;
             });
         };
     }
 };
 
-var options = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-};
-
-function success(pos) {
-    var crd = pos.coords;
-
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
-    console.log(`More or less ${crd.accuracy} meters.`);
-    getCountry(crd.latitude, crd.longitude);
-}
-
-function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
-}
-
-navigator.geolocation.getCurrentPosition(success, error, options);
-
-function getCountry(latitude, longitude) {
-    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}`)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            country = data.results[7].formatted_address;
-        });
-
-}
 populateCardsArray();
