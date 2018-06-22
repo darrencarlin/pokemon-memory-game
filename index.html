@@ -6,11 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt"
+        crossorigin="anonymous">
     <title>Memory Game</title>
 </head>
 
 <body>
- 
+    <audio id="music">
+        <source src="pokemon.mp3" type="audio/mpeg">
+    </audio>
     <div class="wrapper">
         <div id="options" class="options">
             <div class="option-wrapper">
@@ -30,6 +34,15 @@
                     <span id="master" class="btn master"></span>
                 </div>
             </div>
+
+            <div class="option-wrapper">
+                <div id="musicToggle">
+                    <i id="musicOn" class="fas fa-pause"></i>
+                    <i id="musicOff" class="fas fa-play"></i>
+                </div>
+            </div>
+
+
         </div>
 
         <div id="game">

@@ -20,14 +20,58 @@ let easyNum = 6;
 let mediumNum = 12;
 let hardNum = 24;
 let masterNum = 48;
+
+let music = document.getElementById('music')
+music.play();
+document.getElementById('musicOn').classList.add('show');
+document.getElementById('musicOff').classList.add('hide');
+
 document.getElementById('guesses').innerHTML = guesses;
 document.getElementById('medium').classList.add('mode-selected');
+
+
+document.body.ondblclick = function(evt){
+    evt.preventDefault();
+};
+
+var isPlaying = true;
+
+function togglePlay() {
+    if (isPlaying) {
+        music.pause();
+        document.getElementById('musicOn').classList.add('hide');
+        document.getElementById('musicOn').classList.remove('show');
+        document.getElementById('musicOff').classList.add('show');
+        document.getElementById('musicOff').classList.remove('hide');
+    } else {
+        music.play();
+        document.getElementById('musicOn').classList.add('show');
+        document.getElementById('musicOn').classList.remove('hide');
+        document.getElementById('musicOff').classList.add('hide');
+        document.getElementById('musicOff').classList.remove('show');
+
+    }
+};
+
+music.onplaying = function () {
+    isPlaying = true;
+};
+music.onpause = function () {
+    isPlaying = false;
+};
+
+let musicToggle = document.getElementById('musicToggle');
+console.log(musicToggle)
+musicToggle.addEventListener('click', function () {
+    togglePlay();
+});
+
+
 
 difficulty.addEventListener('click', function () {
     game.style.display = 'initial';
     table.style.display = 'none';
     let clicked = event.target.id;
-
     if (clicked == 'easy') {
         chosenDifficulty = 'Easy';
         populateCardsArray(easyNum);
@@ -207,7 +251,7 @@ const endGame = () => {
 };
 
 const enterName = () => {
-   
+
     let firebaseKey = firebase.database().ref().child('memory-game-5bdeb').push().key;
     let player = prompt('Please enter your name');
     let data = {

@@ -26,6 +26,10 @@ img {
     max-width: 100%;
 }
 
+i {
+    cursor: pointer;
+}
+
 /* Module */
 
 .wrapper {
@@ -90,7 +94,7 @@ img {
     align-content: center;
     align-items: center;
     padding: 10px;
-    background: rgba(0, 0, 0, .5);
+    background: #fe3d32;
 }
 
 .medium {
@@ -108,7 +112,7 @@ img {
     align-content: center;
     align-items: center;
     padding: 10px;
-    background: rgba(0, 0, 0, .5);
+    background: #fe3d32;
 }
 
 .hard {
@@ -126,7 +130,7 @@ img {
     align-content: center;
     align-items: center;
     padding: 10px;
-    background: rgba(0, 0, 0, .5);
+    background: #fe3d32;
 }
 
 .master {
@@ -144,12 +148,20 @@ img {
     align-content: center;
     align-items: center;
     padding: 10px;
-    background: rgba(0, 0, 0, .5);
+    background: #fe3d32
 }
 
 .mode-selected {
     background-color: #ffcb05;
     border-radius: 10px;
+}
+
+.show {
+    display: block !important;
+}
+
+.hide {
+    display: none !important;
 }
 
 /* Game Board */
