@@ -4,6 +4,7 @@ let secondGuess = '';
 let count = 0;
 let counterTime = 0;
 let counterStart = false;
+let gameStart = false;
 let matches = 0;
 let guesses = 0;
 let delay = 1000;
@@ -21,18 +22,46 @@ let mediumNum = 12;
 let hardNum = 24;
 let masterNum = 48;
 
-let music = document.getElementById('music')
+
+// Leaderboard Table Sorting 
+
+function addListeners() {
+    document.getElementById('orderByTime').addEventListener('click', function () {
+        displayLeaderboard.orderByTime();
+        document.getElementById('orderByTime').classList.add('highlight');
+        document.getElementById('orderByGuess').classList.remove('highlight');
+        document.getElementById('orderByGuess').classList.remove('highlight');
+    });
+
+    document.getElementById('orderByName').addEventListener('click', function () {
+        displayLeaderboard.orderByName();
+        document.getElementById('orderByName').classList.add('highlight');
+        document.getElementById('orderByGuess').classList.remove('highlight');
+        document.getElementById('orderByTime').classList.remove('highlight');
+    });
+
+    document.getElementById('orderByGuess').addEventListener('click', function () {
+        displayLeaderboard.orderByGuesses();
+        document.getElementById('orderByGuess').classList.add('highlight');
+        document.getElementById('orderByTime').classList.remove('highlight');
+        document.getElementById('orderByName').classList.remove('highlight');
+    });
+}
+
+
+// Leaderboard Table Sorting End
+
+// Music 
+
+let music = document.getElementById('music');
+let matched = document.getElementById('catch')
+music.loop = true;
 music.play();
 document.getElementById('musicOn').classList.add('show');
 document.getElementById('musicOff').classList.add('hide');
 
 document.getElementById('guesses').innerHTML = guesses;
 document.getElementById('medium').classList.add('mode-selected');
-
-
-document.body.ondblclick = function(evt){
-    evt.preventDefault();
-};
 
 var isPlaying = true;
 
@@ -61,14 +90,25 @@ music.onpause = function () {
 };
 
 let musicToggle = document.getElementById('musicToggle');
-console.log(musicToggle)
 musicToggle.addEventListener('click', function () {
     togglePlay();
 });
 
-
+// Music End
 
 difficulty.addEventListener('click', function () {
+
+    // Reset everything if game is already started
+
+    if (gameStart) {
+        counterTime = 0;
+        guesses = 0;
+        document.getElementById('guesses').innerHTML = guesses;
+        document.getElementById('timer').innerHTML = '0:00';
+        clearInterval(start);
+        counterStart = false;
+    }
+
     game.style.display = 'initial';
     table.style.display = 'none';
     let clicked = event.target.id;
@@ -137,6 +177,9 @@ grid.addEventListener('click', () => {
 
     let clicked = event.target;
 
+    gameStart = true
+
+    console.log(clicked);
     if (!counterStart) {
         counterTime = 0;
         guesses = 0;
@@ -154,16 +197,17 @@ grid.addEventListener('click', () => {
         count++;
         if (count === 1) {
             firstGuess = clicked.parentNode.dataset.name;
-            clicked.parentNode.classList.add('selected');
+            clicked.closest(".card").classList.add('selected');
         } else {
             secondGuess = clicked.parentNode.dataset.name;
-            clicked.parentNode.classList.add('selected');
+            clicked.closest(".card").classList.add('selected');
             game.style.pointerEvents = "none";
             guesses++
             document.getElementById('guesses').innerHTML = guesses;
         }
         if (firstGuess !== '' && secondGuess !== '') {
             if (firstGuess === secondGuess) {
+
                 setTimeout(match, delay);
                 setTimeout(resetGuesses, delay);
             } else {
@@ -217,6 +261,7 @@ function populateGrid(gameGrid) {
 
 
 const match = () => {
+    matched.play();
     var selected = document.querySelectorAll('.selected');
     selected.forEach(card => {
         card.classList.add('match');
@@ -327,13 +372,12 @@ let displayLeaderboard = {
 
     display: function (data) {
         let table = document.getElementById('table');
-        console.log(data);
         table.innerHTML = ` 
                         <tr>
-                            <th>Rank</th>
-                            <th>Player</th>
-                            <th>Time</th>
-                            <th>Guesses</th>
+                            <th >Rank</th>
+                            <th id='orderByName'>Player</th>
+                            <th id='orderByTime'>Time</th>
+                            <th id='orderByGuess'>Guesses</th>
                         </tr>`;
         if (typeof data === 'string') {
             table.innerHTML = `<tr><td>No scores recorded for this mode</td></tr>`;
@@ -349,6 +393,7 @@ let displayLeaderboard = {
                         </tr>`;
             });
         };
+        addListeners();
     }
 };
 

@@ -1,3 +1,4 @@
+
 *,
 *::before,
 *::after {
@@ -60,7 +61,7 @@ i {
     align-items: center;
     margin: 5px;
     padding: 15px;
-    border: 1px solid #FFF;
+    /* border: 1px solid #FFF; */
     width: 100px;
 }
 
@@ -186,6 +187,7 @@ i {
 .front {
     height: 150px;
     width: 150px;
+    cursor: pointer;
 }
 
 .back,
@@ -246,12 +248,18 @@ table th {
     text-align: left;
     background-color: #fe3d32;
     color: white;
+    cursor: pointer;
+}
+
+.highlight {
+    background-color: #ffcb05;
 }
 
 /* Event Styles */
 
 .selected {
     transform: rotateY(180deg);
+    pointer-events: none;
 }
 
 .match .front {
