@@ -11,17 +11,19 @@ Todo:
   
   Finished 
   
-  * ~~Add difficulties (Easy, Medium, Hard)~~
-  * ~~Keep scores based on time and number of guesses.~~
-  * ~~Hook it up to a scoreboard with a database using firebase.~~
+  * Add difficulties (Easy, Medium, Hard)
+  * Keep scores based on time and number of guesses.
+  * Hook it up to a scoreboard with a database using firebase.
+  * Add music
   
 Bugs: 
 
 To fix:
 
   * Sometimes cards are coming back undefined on the name property of the JS object
+  * Double clicking inverts the game board
 
 Fixed:
 
-  * ~~3rd click bugs out the game cards preventing you from clicking that card unless another is clicked first.~~
+  * 3rd click bugs out the game cards preventing you from clicking that card unless another is clicked first.
  
