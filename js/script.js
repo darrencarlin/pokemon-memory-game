@@ -261,7 +261,6 @@ function populateGrid(gameGrid) {
 
 
 const match = () => {
-    matched.play();
     var selected = document.querySelectorAll('.selected');
     selected.forEach(card => {
         card.classList.add('match');
@@ -287,6 +286,7 @@ const resetGuesses = () => {
 };
 
 const endGame = () => {
+    matched.play();
     game.style.display = 'none';
     table.style.display = 'inline-table';
     enterName();
