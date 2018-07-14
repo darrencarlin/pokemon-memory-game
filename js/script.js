@@ -96,7 +96,7 @@ musicToggle.addEventListener('click', function () {
 
 // Music End
 
-difficulty.addEventListener('click', function () {
+difficulty.addEventListener('click', function (event) {
 
     // Reset everything if game is already started
 
