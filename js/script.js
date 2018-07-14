@@ -173,7 +173,7 @@ difficulty.addEventListener('click', function () {
 
 });
 
-grid.addEventListener('click', () => {
+grid.addEventListener('click', (event) => {
 
     let clicked = event.target;
 
