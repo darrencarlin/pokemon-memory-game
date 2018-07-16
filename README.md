@@ -1,4 +1,7 @@
 # pokemon-memory-game
+
+Check out the GitHub Pages version: https://darrencarlin.github.io/pokemon-memory-game/
+
 Following this tutorial: https://www.taniarascia.com/how-to-create-a-memory-game-super-mario-with-plain-javascript/
 
 I have expanded on this by adding an array with the original 151 Pokemon which the program selects 12 randomly at the beginning, different difficulty modes, time and guess count, a datebase with leaderboards.
